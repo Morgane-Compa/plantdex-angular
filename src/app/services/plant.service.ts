@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Plant } from '../models/plant';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
+import { PLANT_URL } from '../shared/urls';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,6 @@ export class PlantService {
    *
    */
   getPlants(): Observable<Plant[]> {
-    return this.http.get<Plant[]>('http://localhost:3000/plants');
+    return this.http.get<{data:Plant[]}>(PLANT_URL).pipe(map(response => response.data));
   }
 }
